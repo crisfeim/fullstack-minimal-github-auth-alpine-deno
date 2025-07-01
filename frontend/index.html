@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>GitHub Auth</title>
+  <script src="//unpkg.com/alpinejs" defer></script>
+  <style>
+    body { max-width: 600px; margin: 2rem auto }
+  </style>
+</head>
+<body x-data="app()" x-init="init()">
+
+  <template x-if="!loggedIn">
+      <button @click="login()">Login with GitHub</button>
+  </template>
+
+  <template x-if="loggedIn">
+    <div>
+        <p>Logged in</p>
+      <button @click="logout()">Logout</button>
+    </div>
+  </template>
+
+  <script>
+    function app() {
+      return {
+        get loggedIn() {
+          return !!localStorage.getItem("token");
+        },
+
+        logout() {
+          localStorage.removeItem("token");
+          location.reload()
+        },
+        init() {
+          const params = new URLSearchParams(window.location.search);
+          const token = params.get("token");
+
+          if (token) {
+            localStorage.setItem("token", token);
+            window.history.replaceState(null, "", window.location.pathname);
+          }
+        },
+
+        login() {
+          window.location.href = "http://localhost:8000/login";
+        }
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+[
+    {
+        "label": "Frontend",
+        "command": "php -S localhost:3000 -t frontend"
+    },
+    {
+        "label": "Backend",
+        "command": "deno run --allow-net --allow-env --allow-read backend/main.ts"
+    },
+]
